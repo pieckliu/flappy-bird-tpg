@@ -9,7 +9,7 @@ from tpg import TPGAgent
 
 def main():
     parser = argparse.ArgumentParser(description="Watch a trained TPG agent")
-    parser.add_argument("--model", default="checkpoints/best.json")
+    parser.add_argument("--model", default="checkpoints/shared_env/best.json")
     parser.add_argument("--seed", type=int, default=123)
     parser.add_argument("--fps", type=int, default=60)
     args = parser.parse_args()

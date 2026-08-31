@@ -1,0 +1,4 @@
+pygame>=2.5,<3
+numpy>=1.24,<2
+numba>=0.57
+git+https://github.com/Ryan-Amaral/PyTPG.git@7295f90ececbfc34fdbc1d73e032a9c2407a182c

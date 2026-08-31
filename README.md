@@ -9,8 +9,8 @@ cd C:\code\flappy-bird-tpg
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 pip install -r requirements.txt
-python train.py --generations 100 --population 80
-python play.py --model checkpoints\best.json
+python train.py --generations 200 --population 80
+python play.py --model checkpoints\shared_env\best.json
 ```
 
 训练不需要图形窗口；`play.py` 使用 Pygame 展示最佳个体。首次训练可先用较小参数验证：
@@ -38,3 +38,22 @@ python -m unittest discover -s tests -v
 ```
 
 训练结果保存在 `checkpoints/`，该目录中的模型默认不提交到 Git。
+
+## 与 PyTPG 公平比较
+
+两个训练入口现在共同使用 `shared_flappy.FlappyEnv`、
+`shared_flappy.evaluate_agent` 和完全相同的默认参数：80 个 agent、3 个训练
+episode、5 个验证 episode、最多 6000 步、种子 42。训练种子和验证种子在
+所有 generation 中固定，验证种子与训练种子分离。
+
+```powershell
+# 精简实现
+python train.py --generations 200
+
+# 官方 PyTPG 实现（在它自己的虚拟环境中）
+cd pytpg_flappy
+.\.venv\Scripts\python.exe train.py --generations 200
+```
+
+两边日志字段相同，优先比较 `val_pipes` 和 `val_steps`，其次比较 `val`；
+不要用训练耗时相同来代替环境交互预算相同。

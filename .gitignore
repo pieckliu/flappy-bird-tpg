@@ -1,6 +1,8 @@
 .venv/
+.idea/
 __pycache__/
 .pytest_cache/
 *.py[cod]
 checkpoints/*.json
+checkpoints/**/*.json
 !checkpoints/.gitkeep

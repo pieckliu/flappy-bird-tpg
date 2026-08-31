@@ -87,7 +87,14 @@ class TPGAgent:
         return TPGAgent(teams, data["root"])
 
 
-def evolve(evaluate, generations=100, population_size=80, seed=42, on_generation=None):
+def evolve(
+    evaluate,
+    generations=100,
+    population_size=80,
+    seed=42,
+    on_generation=None,
+    on_scored=None,
+):
     rng = np.random.default_rng(seed)
     population = [TPGAgent.random_agent(rng) for _ in range(population_size)]
     best, best_fitness = None, float("-inf")
@@ -98,6 +105,8 @@ def evolve(evaluate, generations=100, population_size=80, seed=42, on_generation
             best_fitness, best = scored[0][0], copy.deepcopy(scored[0][1])
         if on_generation:
             on_generation(generation, scored[0][0], best_fitness, best)
+        if on_scored:
+            on_scored(generation, scored, best_fitness, best)
         elites = [agent for _, agent in scored[:elite_count]]
         population = [copy.deepcopy(agent) for agent in elites]
         while len(population) < population_size:
